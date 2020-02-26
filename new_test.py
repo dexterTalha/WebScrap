@@ -1,19 +1,23 @@
-import requests
-from bs4 import BeautifulSoup as soup
+import time
 
-file = open("cashify_brand.csv", "w")
-header = "brand, product_name, product_link\n"
-file.write(header)
-url = "https://www.newegg.com/global/in-en/p/pl?N=101300354&name=Desktop%20Graphics%20Cards&isdeptsrh=1"
-res = requests.get(url)
-cssClass = "item-info"
-brands = soup(res.text, 'html.parser')
-containers = brands.findAll("div", {"class": cssClass})
+import self as self
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
 
-for container in containers:
-    brand = container.div.a.img['title']
-    title_container = container.findAll("a", {"class": "item-title"})
-    product_link = title_container[0]['href']
-    product_name = title_container[0].text
-    file.write(brand + "," + product_name.replace(",", "|") + ","+product_link+"\n")
-file.close()
+url = "https://www.cashify.in/sell-old-mobile-phone/sell-xiaomi"
+
+browser = webdriver.Chrome("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chromedriver.exe")
+browser.get(url)
+series_container = browser.find_elements_by_xpath("//*[@class='mar-t20 layout horizontal wrap pad-lr-16-mob']")
+
+for series in series_container:
+    s = series.find_elements_by_xpath("//*[@class='pad10']")
+    for li in s:
+        span1 = li.find_element_by_tag_name("span")
+        span = span1.find_element_by_tag_name("span")
+        print(span.text)
+        li.click()
+
+        cl.click()
