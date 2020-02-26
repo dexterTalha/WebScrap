@@ -19,7 +19,6 @@ while True:
     gray = cv2.equalizeHist(gray)
 
     faces = faceCascade.detectMultiScale(frame)
-
     for (x, y, w, h) in faces:
         roi_gray = gray[y:y + h, x:x + w]
         roi_color = frame[y:y + h, x:x + w]
