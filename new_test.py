@@ -10,7 +10,10 @@ url = "https://www.cashify.in/sell-old-mobile-phone/sell-xiaomi"
 
 browser = webdriver.Chrome("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chromedriver.exe")
 browser.get(url)
-series_container = browser.find_elements_by_xpath("//*[@class='mar-t20 layout horizontal wrap pad-lr-16-mob']")
+city_container = WebDriverWait(browser, 20).until(EC.presence_of_element_located((By.XPATH, "//*[@class='MuiGrid-root MuiGrid-container MuiGrid-justify-xs-center']")))
+city = city_container.find_elements_by_xpath("//*[@class='MuiGrid-root jss278 cursor MuiGrid-container MuiGrid-item MuiGrid-zeroMinWidth MuiGrid-direction-xs-column MuiGrid-wrap-xs-nowrap MuiGrid-align-items-xs-center MuiGrid-justify-xs-center']")
+city[2].click()
+series_container = WebDriverWait(browser, 10).until(EC.presence_of_all_elements_located((By.XPATH, "//*[@class='mar-t20 layout horizontal wrap pad-lr-16-mob']")))
 elem = browser.find_element_by_tag_name("body")
 for series in series_container:
     s = series.find_elements_by_xpath("//*[@class='pad10']")
@@ -19,7 +22,7 @@ for series in series_container:
         span = span1[li].find_element_by_tag_name("span")
         print(span.text)
         span1[li].click()
-        main_container = browser.find_element_by_xpath("//div[@class='jsx-1143766650 product-discovery min-height70']")
+        main_container = WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.XPATH, "//div[@class='jsx-1143766650 product-discovery min-height70']")))
         mobile_containers = main_container.find_elements_by_xpath("//*[@class='jsx-1143766650 layout horizontal center-center card-margin ']")
 
         no_of_pagedowns = 10
@@ -38,4 +41,3 @@ for series in series_container:
 
         close = WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.XPATH, "//*[@class='jss357']")))
         close.click()
-
