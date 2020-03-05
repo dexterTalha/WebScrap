@@ -1,11 +1,9 @@
 import time
-from bs4 import BeautifulSoup as soup
 from selenium import webdriver as driver
-from selenium.webdriver import ActionChains
+from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.common.by import By
 
 browser = driver.Chrome("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chromedriver.exe")
 browser.get("https://www.cashify.in/sell-old-mobile-phone/sell-xiaomi")
@@ -39,7 +37,7 @@ for mobile in range(len(mobile_models)):
     print(a.text)
     url = a.get_attribute("href")
     browser.execute_script("window.open('')")
-    time.sleep(2)
+    time.sleep(0.2)
     browser.switch_to.window(browser.window_handles[1])
     browser.get(url)
     # variant selection
@@ -62,7 +60,8 @@ for mobile in range(len(mobile_models)):
             browser.back()
             variant = WebDriverWait(browser, 10).until(EC.presence_of_all_elements_located(
                 (By.XPATH, "//*[@class='jsx-391710674 jsx-3475687450 pad10']")))
-    except:
+    except Exception as e:
+        # logging.exception(e)
         variant_price = WebDriverWait(browser, 10).until(EC.presence_of_element_located(
             (By.XPATH, "//div[@itemprop='offers']")))
         price_span = variant_price.find_element_by_xpath(
